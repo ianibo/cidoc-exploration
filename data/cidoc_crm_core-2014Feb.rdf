@@ -1,0 +1,1402 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CIDOC CRM CORE (draft) Encoded in RDFS
+
+Created by ICS-FORTH (ISL-ICS) Thursday 27 February 2014
+
+Encoding Rules:
+1. The RDF spelling rules do not allow blanks. Hence we have replaced them by underscores.
+   For instance "E63_Beginning_of_Existence" or "P2i_is_type_of".
+
+2. RDF does not allow to instantiate properties beginning from a range value.
+   Therefore, each CRM property is represented as two RDFS properties.
+   For instance "P2 has type (is type of)" is represented as:
+   "P2_has_type" for the domain to range direction and "P2i_is_type_of" for the range to domain direction.
+
+3. The primitive values "E60 Number", "E61 Time Primitive" and "E62 String" referred in
+   the Model for formal completeness are interpreted as rdf: literal.
+
+4. RDF does not support properties of properties, therefore, users may create their own
+   subProperties for CRM properties that have a type property such as "P3 has note":
+   Instead of P3 has note (P3-1 has type : parts description) declare
+   <rdf:Property rdf:about="P3_parts_description">
+      <rdfs:domain rdf:resource="E1_CRM_Entity"/>
+      <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+      <rdfs:subPropertyOf rdf:resource="P3_has_note"/>
+   </rdf:Property>
+
+5. Scope notes are represented as <rdf:comment> elements.
+
+6. In addition this encoding contains labels in languages different from English, 
+which are taken from translations of previous versions of the CIDOC CRM.    
+
+7. Any other differences in labels, scope notes  and semantic relationships of this encoding 
+to the authoritative definition of the CIDOC CRM v.5.1 (draft, May 2013) are not intended transfer errors. 
+FORTH appreciates your feed-back on such errors.
+-->
+
+<rdf:RDF xml:lang="en" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"  xml:base="http://www.cidoc-crm.org/cidoc-crm/">
+
+<rdfs:Class rdf:about="E1_CRM_Entity">
+	<rdfs:label xml:lang="el">Οντότητα CIDOC CRM</rdfs:label>
+	<rdfs:label xml:lang="en">CRM Entity</rdfs:label>
+	<rdfs:label xml:lang="de">CRM Entität</rdfs:label>
+	<rdfs:label xml:lang="ru">CRM Сущность</rdfs:label>
+	<rdfs:label xml:lang="fr">Entité CRM</rdfs:label>
+	<rdfs:label xml:lang="pt">Entidade CRM</rdfs:label>
+	<rdfs:label xml:lang="cn">CRM实体</rdfs:label>
+	<rdfs:comment>This class comprises all things in the universe of discourse of the CIDOC Conceptual Reference Model. 
+It is an abstract concept providing for three general properties:
+1.	Identification by name or appellation, and in particular by a preferred identifier
+2.	Classification by type, allowing further refinement of the specific subclass an instance belongs to 
+3.	Attachment of free text for the expression of anything not captured by formal properties
+With the exception of E59 Primitive Value, all other classes within the CRM are directly or indirectly specialisations of E1 CRM Entity. 
+</rdfs:comment>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E2_Temporal_Entity">
+	<rdfs:label xml:lang="fr">Entité temporelle</rdfs:label>
+	<rdfs:label xml:lang="en">Temporal Entity</rdfs:label>
+	<rdfs:label xml:lang="ru">Временная Сущность</rdfs:label>
+	<rdfs:label xml:lang="el">Έγχρονη  Οντότητα</rdfs:label>
+	<rdfs:label xml:lang="de">Geschehendes</rdfs:label>
+	<rdfs:label xml:lang="pt">Entidade Temporal</rdfs:label>
+	<rdfs:label xml:lang="cn">时间实体</rdfs:label>
+	<rdfs:comment>This class comprises all phenomena, such as the instances of E4 Periods, E5 Events and states, which happen over a limited extent in time. 
+	In some contexts, these are also called perdurants. This class is disjoint from E77 Persistent Item. This is an abstract class and has no direct instances. E2 Temporal Entity is specialized into E4 Period, which applies to a particular geographic area (defined with a greater or lesser degree of precision), and E3 Condition State, which applies to instances of E18 Physical Thing.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E1_CRM_Entity"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E4_Period">
+	<rdfs:label xml:lang="de">Phase</rdfs:label>
+	<rdfs:label xml:lang="en">Period</rdfs:label>
+	<rdfs:label xml:lang="fr">Période</rdfs:label>
+	<rdfs:label xml:lang="ru">Период</rdfs:label>
+	<rdfs:label xml:lang="el">Περίοδος</rdfs:label>
+	<rdfs:label xml:lang="pt">Período</rdfs:label>
+	<rdfs:label xml:lang="cn">期间</rdfs:label>
+	<rdfs:comment>	This class comprises sets of coherent phenomena or cultural manifestations bounded in time and space. 
+It is the social or physical coherence of these phenomena that identify an E4 Period and not the associated spatio-temporal bounds. These bounds are a mere approximation of the actual process of growth, spread and retreat. Consequently, different periods can overlap and coexist in time and space, such as when a nomadic culture exists in the same area as a sedentary culture. 
+Typically this class is used to describe prehistoric or historic periods such as the “Neolithic Period”, the “Ming Dynasty” or the “McCarthy Era”. There are however no assumptions about the scale of the associated phenomena. In particular all events are seen as synthetic processes consisting of coherent phenomena. Therefore E4 Period is a superclass of E5 Event. For example, a modern clinical E67 Birth can be seen as both an atomic E5 Event and as an E4 Period that consists of multiple activities performed by multiple instances of E39 Actor. 
+There are two different conceptualisations of ‘artistic style’, defined either by physical features or by historical context. For example, “Impressionism” can be viewed as a period lasting from approximately 1870 to 1905 during which paintings with particular characteristics were produced by a group of artists that included (among others) Monet, Renoir, Pissarro, Sisley and Degas. Alternatively, it can be regarded as a style applicable to all paintings sharing the characteristics of the works produced by the Impressionist painters, regardless of historical context. The first interpretation is an E4 Period, and the second defines morphological object types that fall under E55 Type.
+Another specific case of an E4 Period is the set of activities and phenomena associated with a settlement, such as the populated period of Nineveh.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E2_Temporal_Entity"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E5_Event">
+	<rdfs:label xml:lang="el">Συμβάν</rdfs:label>
+	<rdfs:label xml:lang="fr">Événement</rdfs:label>
+	<rdfs:label xml:lang="ru">Событие</rdfs:label>
+	<rdfs:label xml:lang="en">Event</rdfs:label>
+	<rdfs:label xml:lang="de">Ereignis</rdfs:label>
+	<rdfs:label xml:lang="pt">Evento</rdfs:label>
+	<rdfs:label xml:lang="cn">事件</rdfs:label>
+	<rdfs:comment>This class comprises changes of states in cultural, social or physical systems, regardless of scale, brought about by a series or group of coherent physical, cultural, technological or legal phenomena. Such changes of state will affect instances of E77 Persistent Item or its subclasses.
+The distinction between an E5 Event and an E4 Period is partly a question of the scale of observation. Viewed at a coarse level of detail, an E5 Event is an ‘instantaneous’ change of state. At a fine level, the E5 Event can be analysed into its component phenomena within a space and time frame, and as such can be seen as an E4 Period. The reverse is not necessarily the case: not all instances of E4 Period give rise to a noteworthy change of state.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E4_Period"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E7_Activity">
+	<rdfs:label xml:lang="en">Activity</rdfs:label>
+	<rdfs:label xml:lang="fr">Activité</rdfs:label>
+	<rdfs:label xml:lang="de">Handlung</rdfs:label>
+	<rdfs:label xml:lang="ru">Деятельность</rdfs:label>
+	<rdfs:label xml:lang="el">Δράση</rdfs:label>
+	<rdfs:label xml:lang="pt">Atividade</rdfs:label>
+	<rdfs:label xml:lang="cn">活动</rdfs:label>
+	<rdfs:comment>This class comprises actions intentionally carried out by instances of E39 Actor that result in changes of state in the cultural, social, or physical systems documented. 
+This notion includes complex, composite and long-lasting actions such as the building of a settlement or a war, as well as simple, short-lived actions such as the opening of a door.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E5_Event"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E11_Modification">
+	<rdfs:label xml:lang="ru">Событие Изменения</rdfs:label>
+	<rdfs:label xml:lang="en">Modification</rdfs:label>
+	<rdfs:label xml:lang="el">Τροποποίηση</rdfs:label>
+	<rdfs:label xml:lang="fr">Modification</rdfs:label>
+	<rdfs:label xml:lang="de">Bearbeitung</rdfs:label>
+	<rdfs:label xml:lang="pt">Modificação</rdfs:label>
+	<rdfs:label xml:lang="cn">修改</rdfs:label>
+	<rdfs:comment>This class comprises all instances of E7 Activity that create, alter or change E24 Physical Man-Made Thing. 
+This class includes the production of an item from raw materials, and other so far undocumented objects, and the preventive treatment or restoration of an object for conservation. 
+Since the distinction between modification and production is not always clear, modification is regarded as the more generally applicable concept. This implies that some items may be consumed or destroyed in a Modification, and that others may be produced as a result of it. An event should also be documented using E81 Transformation if it results in the destruction of one or more objects and the simultaneous production of others using parts or material from the originals. In this case, the new items have separate identities. 
+If the instance of the E29 Design or Procedure utilized for the modification prescribes the use of specific materials, they should be documented using property P68 foresees use of (use foreseen by): E57 Material of E29 Design or Procedure, rather than via P126 employed (was employed in): E57 Material.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E7_Activity"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E12_Production">
+	<rdfs:label xml:lang="fr">Production</rdfs:label>
+	<rdfs:label xml:lang="el">Παραγωγή</rdfs:label>
+	<rdfs:label xml:lang="de">Herstellung</rdfs:label>
+	<rdfs:label xml:lang="ru">Событие Производства</rdfs:label>
+	<rdfs:label xml:lang="en">Production</rdfs:label>
+	<rdfs:label xml:lang="pt">Produção</rdfs:label>
+	<rdfs:label xml:lang="cn">生产</rdfs:label>
+	<rdfs:comment>This class comprises activities that are designed to, and succeed in, creating one or more new items. 
+It specializes the notion of modification into production. The decision as to whether or not an object is regarded as new is context sensitive. Normally, items are considered “new” if there is no obvious overall similarity between them and the consumed items and material used in their production. In other cases, an item is considered “new” because it becomes relevant to documentation by a modification. For example, the scribbling of a name on a potsherd may make it a voting token. The original potsherd may not be worth documenting, in contrast to the inscribed one. 
+This entity can be collective: the printing of a thousand books, for example, would normally be considered a single event. 
+An event should also be documented using E81 Transformation if it results in the destruction of one or more objects and the simultaneous production of others using parts or material from the originals. In this case, the new items have separate identities and matter is preserved, but identity is not.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E11_Modification"/>
+	<rdfs:subClassOf rdf:resource="E63_Beginning_of_Existence"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E13_Attribute_Assignment">
+	<rdfs:label xml:lang="ru">Присвоение Атрибута</rdfs:label>
+	<rdfs:label xml:lang="fr">Affectation d'attribut</rdfs:label>
+	<rdfs:label xml:lang="de">Merkmalszuweisung</rdfs:label>
+	<rdfs:label xml:lang="en">Attribute Assignment</rdfs:label>
+	<rdfs:label xml:lang="el">Απόδοση Ιδιοτήτων</rdfs:label>
+	<rdfs:label xml:lang="pt">Atribuição de Característica</rdfs:label>
+	<rdfs:label xml:lang="cn">屬性指定</rdfs:label>
+	<rdfs:comment>This class comprises the actions of making assertions about properties of an object or any relation between two items or concepts. 
+This class allows the documentation of how the respective assignment came about, and whose opinion it was. All the attributes or properties assigned in such an action can also be seen as directly attached to the respective item or concept, possibly as a collection of contradictory values. All cases of properties in this model that are also described indirectly through an action are characterised as "short cuts" of this action. This redundant modelling of two alternative views is preferred because many implementations may have good reasons to model either the action or the short cut, and the relation between both alternatives can be captured by simple rules. 
+In particular, the class describes the actions of people making propositions and statements during certain museum procedures, e.g. the person and date when a condition statement was made, an identifier was assigned, the museum object was measured, etc. Which kinds of such assignments and statements need to be documented explicitly in structures of a schema rather than free text, depends on if this information should be accessible by structured queries. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E7_Activity"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E18_Physical_Thing">
+	<rdfs:label xml:lang="de">Materielles</rdfs:label>
+	<rdfs:label xml:lang="el">Υλικό Πράγμα</rdfs:label>
+	<rdfs:label xml:lang="en">Physical Thing</rdfs:label>
+	<rdfs:label xml:lang="fr">Chose matérielle</rdfs:label>
+	<rdfs:label xml:lang="ru">Физическая Вещь</rdfs:label>
+	<rdfs:label xml:lang="pt">Coisa Material</rdfs:label>
+	<rdfs:label xml:lang="cn">实体物</rdfs:label>
+	<rdfs:comment>This class comprises all persistent physical items with a relatively stable form, man-made or natural. 
+Depending on the existence of natural boundaries of such things, the CRM distinguishes the instances of E19 Physical Object from instances of E26 Physical Feature, such as holes, rivers, pieces of land etc. Most instances of E19 Physical Object can be moved (if not too heavy), whereas features are integral to the surrounding matter. 
+The CRM is generally not concerned with amounts of matter in fluid or gaseous states. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E72_Legal_Object"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E24_Physical_Man-Made_Thing">
+	<rdfs:label xml:lang="ru">Физическая Рукотворная Вещь</rdfs:label>
+    <rdfs:label xml:lang="en">Physical Man-Made Thing</rdfs:label>
+    <rdfs:label xml:lang="el">Ανθρωπογενές Υλικό Πράγμα</rdfs:label>
+    <rdfs:label xml:lang="de">Hergestelltes</rdfs:label>
+    <rdfs:label xml:lang="fr">Chose matérielle fabriquée</rdfs:label>
+	<rdfs:label xml:lang="pt">Coisa Material Fabricada</rdfs:label>
+	<rdfs:label xml:lang="cn">人造实体物</rdfs:label>
+	<rdfs:comment>This class comprises all persistent physical items that are purposely created by human activity.
+This class comprises man-made objects, such as a swords, and man-made features, such as rock art. No assumptions are made as to the extent of modification required to justify regarding an object as man-made. For example, a “cup and ring” carving on bedrock is regarded as instance of E24 Physical Man-Made Thing. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E18_Physical_Thing"/>
+	<rdfs:subClassOf rdf:resource="E71_Man-Made_Thing"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E28_Conceptual_Object">
+	<rdfs:label xml:lang="fr">Objet conceptuel</rdfs:label>
+    <rdfs:label xml:lang="de">Begrifflicher Gegenstand</rdfs:label>
+	<rdfs:label xml:lang="ru">Концептуальный Объект</rdfs:label>
+    <rdfs:label xml:lang="en">Conceptual Object</rdfs:label>
+    <rdfs:label xml:lang="el">Νοητικό Αντικείμενο</rdfs:label>
+	<rdfs:label xml:lang="pt">Objeto Conceitual</rdfs:label>
+	<rdfs:label xml:lang="cn">概念物件</rdfs:label>
+	<rdfs:comment>This class comprises non-material products of our minds and other human produced data that 		have become objects of a discourse about their identity, circumstances of creation or historical 		implication. The production of such information may have been supported by the use of    		technical devices such as cameras or computers.
+Characteristically, instances of this class are created, invented or thought by someone, and then may be documented or communicated between persons. Instances of E28 Conceptual Object have the ability to exist on more than one particular carrier at the same time, such as paper, electronic signals, marks, audio media, paintings, photos, human memories, etc.
+They cannot be destroyed. They exist as long as they can be found on at least one carrier or in at least one human memory. Their existence ends when the last carrier and the last memory are lost. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E71_Man-Made_Thing"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E30_Right">
+	<rdfs:label xml:lang="ru">Право</rdfs:label>
+    <rdfs:label xml:lang="el">Δικαίωμα</rdfs:label>
+    <rdfs:label xml:lang="fr">Droit</rdfs:label>
+    <rdfs:label xml:lang="en">Right</rdfs:label>
+    <rdfs:label xml:lang="de">Recht</rdfs:label>
+    <rdfs:label xml:lang="pt">Direitos</rdfs:label>
+	<rdfs:label xml:lang="cn">权限</rdfs:label>
+	<rdfs:comment>This class comprises legal privileges concerning material and immaterial things or their derivatives. 
+These include reproduction and property rights</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E89_Propositional_Object"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E39_Actor">
+<rdfs:label xml:lang="de">Akteur</rdfs:label>
+<rdfs:label xml:lang="ru">Агент</rdfs:label>
+    <rdfs:label xml:lang="fr">Agent</rdfs:label>
+    <rdfs:label xml:lang="el">Δράστης</rdfs:label>
+    <rdfs:label xml:lang="en">Actor</rdfs:label>
+	<rdfs:label xml:lang="pt">Agente</rdfs:label>
+	<rdfs:label xml:lang="cn">角色</rdfs:label>
+	<rdfs:comment>This class comprises people, either individually or in groups, who have the potential to perform intentional actions for which they can be held responsible. 
+The CRM does not attempt to model the inadvertent actions of such actors. Individual people should be documented as instances of E21 Person, whereas groups should be documented as instances of either E74 Group or its subclass E40 Legal Body.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E77_Persistent_Item"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E41_Appellation">
+<rdfs:label xml:lang="de">Benennung</rdfs:label>
+    <rdfs:label xml:lang="ru">Обозначение</rdfs:label>
+    <rdfs:label xml:lang="en">Appellation</rdfs:label>
+    <rdfs:label xml:lang="fr">Appellation</rdfs:label>
+     <rdfs:label xml:lang="el">Ονομασία</rdfs:label>
+	 <rdfs:label xml:lang="pt">Designação</rdfs:label>
+	<rdfs:label xml:lang="cn">称号</rdfs:label>
+	<rdfs:comment>This class comprises signs, either meaningful or not, or arrangements of signs following a specific syntax, that are used or can be used to refer to and identify a specific instance of some class or category within a certain context.
+Instances of E41 Appellation do not identify things by their meaning, even if they happen to have one, but instead by convention, tradition, or agreement. Instances of E41 Appellation are cultural constructs; as such, they have a context, a history, and a use in time and space by some group of users. A given instance of E41 Appellation can have alternative forms, i.e., other instances of E41 Appellation that are always regarded as equivalent independent from the thing it denotes. 
+Specific subclasses of E41 Appellation should be used when instances of E41 Appellation of a characteristic form are used for particular objects. Instances of E49 Time Appellation, for example, which take the form of instances of E50 Date, can be easily recognised.
+E41 Appellation should not be confused with the act of naming something. Cf. E15 Identifier Assignment
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E90_Symbolic_Object"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E52_Time-Span">
+	<rdfs:label xml:lang="fr">Durée</rdfs:label>
+    <rdfs:label xml:lang="de">Zeitspanne</rdfs:label>
+    <rdfs:label xml:lang="ru">Интервал Времени</rdfs:label>
+    <rdfs:label xml:lang="el">Χρονικό Διάστημα</rdfs:label>
+    <rdfs:label xml:lang="en">Time-Span</rdfs:label>
+	<rdfs:label xml:lang="pt">Período de Tempo</rdfs:label>
+	<rdfs:label xml:lang="cn">时段</rdfs:label>
+	<rdfs:comment>This class comprises abstract temporal extents, in the sense of Galilean physics, having a beginning, an end and a duration. 
+Time Span has no other semantic connotations. Time-Spans are used to define the temporal extent of instances of E4 Period, E5 Event and any other phenomena valid for a certain time. An E52 Time-Span may be identified by one or more instances of E49 Time Appellation. 
+Since our knowledge of history is imperfect, instances of E52 Time-Span can best be considered as approximations of the actual Time-Spans of temporal entities. The properties of E52 Time-Span are intended to allow these approximations to be expressed precisely.  An extreme case of approximation, might, for example, define an E52 Time-Span having unknown beginning, end and duration. Used as a common E52 Time-Span for two events, it would nevertheless define them as being simultaneous, even if nothing else was known. 
+	Automatic processing and querying of instances of E52 Time-Span is facilitated if data can be parsed into an E61 Time Primitive.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E1_CRM_Entity"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="E53_Place">
+<rdfs:label xml:lang="fr">Lieu</rdfs:label>
+ <rdfs:label xml:lang="en">Place</rdfs:label>
+    <rdfs:label xml:lang="el">Τόπος</rdfs:label>
+    <rdfs:label xml:lang="ru">Место</rdfs:label>
+    <rdfs:label xml:lang="de">Ort</rdfs:label>
+	<rdfs:label xml:lang="pt">Local</rdfs:label>
+	<rdfs:label xml:lang="cn">地点</rdfs:label>
+	<rdfs:comment>This class comprises extents in space, in particular on the surface of the earth, in the pure sense of physics: independent from temporal phenomena and matter. 
+The instances of E53 Place are usually determined by reference to the position of “immobile” objects such as buildings, cities, mountains, rivers, or dedicated geodetic marks. A Place can be determined by combining a frame of reference and a location with respect to this frame. It may be identified by one or more instances of E44 Place Appellation.
+ It is sometimes argued that instances of E53 Place are best identified by global coordinates or absolute reference systems. However, relative references are often more relevant in the context of cultural documentation and tend to be more precise. In particular, we are often interested in position in relation to large, mobile objects, such as ships. For example, the Place at which Nelson died is known with reference to a large mobile object – H.M.S Victory. A resolution of this Place in terms of absolute coordinates would require knowledge of the movements of the vessel and the precise time of death, either of which may be revised, and the result would lack historical and cultural relevance.
+Any object can serve as a frame of reference for E53 Place determination. The model foresees the notion of a "section" of an E19 Physical Object as a valid E53 Place determination.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E1_CRM_Entity"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="E54_Dimension">
+<rdfs:label xml:lang="en">Dimension</rdfs:label>
+    <rdfs:label xml:lang="fr">Dimensions</rdfs:label>
+     <rdfs:label xml:lang="el">Μέγεθος</rdfs:label>
+    <rdfs:label xml:lang="ru">Величина</rdfs:label>
+    <rdfs:label xml:lang="de">Maß</rdfs:label>
+	<rdfs:label xml:lang="pt">Dimensão</rdfs:label>
+	<rdfs:label xml:lang="cn">规模数量</rdfs:label>
+	<rdfs:comment>This class comprises quantifiable properties that can be measured by some calibrated means and can be approximated by values, i.e. points or regions in a mathematical or conceptual space, such as natural or real numbers, RGB values etc.
+An instance of E54 Dimension represents the true quantity, independent from its numerical approximation, e.g. in inches or in cm. The properties of the class E54 Dimension allow for expressing the numerical approximation of the values of an instance of E54 Dimension. If the true values belong to a non-discrete space, such as spatial distances, it is recommended to record them as approximations by intervals or regions of indeterminacy enclosing the assumed true values. For instance, a length of 5 cm may be recorded as 4.5-5.5 cm, according to the precision of the respective observation. Note, that interoperability of values described in different units depends critically on the representation as value regions.
+Numerical approximations in archaic instances of E58 Measurement Unit used in historical records should be preserved. Equivalents corresponding to current knowledge should be recorded as additional instances of E54 Dimension as appropriate.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E1_CRM_Entity"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="E55_Type">
+<rdfs:label xml:lang="el">Τύπος</rdfs:label>
+    <rdfs:label xml:lang="en">Type</rdfs:label>
+    <rdfs:label xml:lang="fr">Type</rdfs:label>
+    <rdfs:label xml:lang="ru">Тип</rdfs:label>
+    <rdfs:label xml:lang="de">Typus</rdfs:label>
+	<rdfs:label xml:lang="pt">Tipo</rdfs:label>
+	<rdfs:label xml:lang="cn">类型</rdfs:label>
+	<rdfs:comment>This class comprises concepts denoted by terms from thesauri and controlled vocabularies used to characterize and classify instances of CRM classes. Instances of E55 Type represent concepts  in contrast to instances of E41 Appellation which are used to name instances of CRM classes. 
+E55 Type is the CRM’s interface to domain specific ontologies and thesauri. These can be represented in the CRM as subclasses of E55 Type, forming hierarchies of terms, i.e. instances of E55 Type linked via P127 has broader  term (has narrower term). Such hierarchies may be extended with additional properties. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E28_Conceptual_Object"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E63_Beginning_of_Existence">
+	<rdfs:label xml:lang="fr">Début d'existence</rdfs:label>
+    <rdfs:label xml:lang="en">Beginning of Existence</rdfs:label>
+    <rdfs:label xml:lang="de">Daseinsbeginn</rdfs:label>
+    <rdfs:label xml:lang="el">Αρχή Ύπαρξης</rdfs:label>
+    <rdfs:label xml:lang="ru">Начало Существования</rdfs:label>
+	<rdfs:label xml:lang="pt">Início da Existência</rdfs:label>
+	<rdfs:label xml:lang="cn">存在开始</rdfs:label>
+	<rdfs:comment>This class comprises events that bring into existence any E77 Persistent Item. 
+It may be used for temporal reasoning about things (intellectual products, physical items, groups of people, living beings) beginning to exist; it serves as a hook for determination of a terminus post quem and ante quem. </rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E5_Event"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E64_End_of_Existence">
+	<rdfs:label xml:lang="de">Daseinsende</rdfs:label>
+    <rdfs:label xml:lang="ru">Конец Существования</rdfs:label>
+    <rdfs:label xml:lang="el">Τέλος Ύπαρξης</rdfs:label>
+    <rdfs:label xml:lang="fr">Fin d'existence</rdfs:label>
+    <rdfs:label xml:lang="en">End of Existence</rdfs:label>
+	<rdfs:label xml:lang="pt">Fim da Existência</rdfs:label>
+	<rdfs:label xml:lang="cn">存在结束</rdfs:label>
+	<rdfs:comment>This class comprises events that end the existence of any E77 Persistent Item. 
+It may be used for temporal reasoning about things (physical items, groups of people, living beings) ceasing to exist; it serves as a hook for determination of a terminus postquem and antequem. In cases where substance from a Persistent Item continues to exist in a new form, the process would be documented by E81 Transformation.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E5_Event"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E65_Creation">
+	<rdfs:label xml:lang="el">Δημιουργία</rdfs:label>
+    <rdfs:label xml:lang="ru">Событие Творения</rdfs:label>
+	<rdfs:label xml:lang="fr">Création</rdfs:label>
+    <rdfs:label xml:lang="de">Begriffliche Schöpfung</rdfs:label>
+    <rdfs:label xml:lang="en">Creation</rdfs:label>
+	<rdfs:label xml:lang="pt">Criação</rdfs:label>
+	<rdfs:label xml:lang="cn">创造</rdfs:label>
+	<rdfs:comment>This class comprises events that result in the creation of conceptual items or immaterial products, such as legends, poems, texts, music, images, movies, laws, types etc.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E7_Activity"/>
+	<rdfs:subClassOf rdf:resource="E63_Beginning_of_Existence"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E70_Thing">
+<rdfs:label xml:lang="ru"></rdfs:label>    
+   <rdfs:label xml:lang="fr">Chose</rdfs:label>
+    <rdfs:label xml:lang="en">Thing</rdfs:label>
+    <rdfs:label xml:lang="el">Πράγμα</rdfs:label>
+    <rdfs:label xml:lang="de">Sache</rdfs:label>
+	<rdfs:label xml:lang="pt">Coisa</rdfs:label>
+	<rdfs:label xml:lang="cn">万物</rdfs:label>
+	<rdfs:comment>This general class comprises usable discrete, identifiable, instances of E77 Persistent Item that are documented as single units. 
+
+They can be either intellectual products or physical things, and are characterized by relative stability. They may for instance either have a solid physical form, an electronic encoding, or they may be logical concept or structure. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E77_Persistent_Item"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E71_Man-Made_Thing">
+<rdfs:label xml:lang="de">Künstliches</rdfs:label>
+  <rdfs:label xml:lang="fr">Chose fabriquée</rdfs:label>
+   <rdfs:label xml:lang="ru">Рукотворная Вещь</rdfs:label>
+    <rdfs:label xml:lang="en">Man-Made Thing</rdfs:label>
+    <rdfs:label xml:lang="el">Ανθρώπινο Δημιούργημα</rdfs:label>
+	<rdfs:label xml:lang="pt">Coisa Fabricada</rdfs:label>
+	<rdfs:label xml:lang="cn">人造物</rdfs:label>
+	<rdfs:comment>This class comprises discrete, identifiable man-made items that are documented as single units. 
+These items are either intellectual products or man-made physical things, and are characterized by relative stability. They may for instance have a solid physical form, an electronic encoding, or they may be logical concepts or structures.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E70_Thing"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E72_Legal_Object">
+<rdfs:label xml:lang="fr">Objet juridique</rdfs:label>
+  <rdfs:label xml:lang="ru">Объект Права</rdfs:label>
+    <rdfs:label xml:lang="el">Νομικό Αντικείμενο</rdfs:label>
+   <rdfs:label xml:lang="en">Legal Object</rdfs:label>
+    <rdfs:label xml:lang="de">Rechtsobjekt</rdfs:label>
+	<rdfs:label xml:lang="pt">Objeto Jurídico</rdfs:label>
+	<rdfs:label xml:lang="cn">法律物件</rdfs:label>
+	<rdfs:comment>This class comprises those material or immaterial items to which instances of E30 Right, such as the right of ownership or use, can be applied. 
+This is true for all E18 Physical Thing. In the case of instances of E28 Conceptual Object, however, the identity of the E28 Conceptual Object or the method of its use may be too ambiguous to reliably establish instances of E30 Right, as in the case of taxa and inspirations. Ownership of corporations is currently regarded as out of scope of the CRM. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E70_Thing"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E73_Information_Object">
+	<rdfs:label xml:lang="de">Informationsgegenstand</rdfs:label>
+    <rdfs:label xml:lang="en">Information Object</rdfs:label>
+    <rdfs:label xml:lang="el">Πληροφοριακό Αντικείμενο</rdfs:label>
+    <rdfs:label xml:lang="fr">Objet d'information</rdfs:label>
+    <rdfs:label xml:lang="ru">Информационный Объект</rdfs:label>
+	<rdfs:label xml:lang="pt">Objeto de Informação</rdfs:label>
+	<rdfs:label xml:lang="cn">信息物件</rdfs:label>
+	<rdfs:comment>This class comprises identifiable immaterial items, such as a poems, jokes, data sets, images, texts, multimedia objects, procedural prescriptions, computer program code, algorithm or mathematical formulae, that have an objectively recognizable structure and are documented as single units. 
+An E73 Information Object does not depend on a specific physical carrier, which can include human memory, and it can exist on one or more carriers simultaneously.
+Instances of E73 Information Object of a linguistic nature should be declared as instances of the E33 Linguistic Object subclass. Instances of E73 Information Object of a documentary nature should be declared as instances of the E31 Document subclass. Conceptual items such as types and classes are not instances of E73 Information Object, nor are ideas without a reproducible expression. 
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E89_Propositional_Object"/>
+	<rdfs:subClassOf rdf:resource="E90_Symbolic_Object"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E74_Group">
+<rdfs:label xml:lang="ru">Группа</rdfs:label>
+    <rdfs:label xml:lang="en">Group</rdfs:label>
+    <rdfs:label xml:lang="el">Ομάδα</rdfs:label>
+    <rdfs:label xml:lang="de">Menschliche Gruppe</rdfs:label>
+   <rdfs:label xml:lang="fr">Groupe</rdfs:label>
+   <rdfs:label xml:lang="pt">Grupo</rdfs:label>
+	<rdfs:label xml:lang="cn">群组</rdfs:label>
+	<rdfs:comment>This class comprises any gatherings or organizations of two or more people that act collectively or in a similar way due to any form of unifying relationship. In the wider sense this class also comprises official positions which used to be regarded in certain contexts as one actor, independent of the current holder of the office, such as the president of a country. 
+A gathering of people becomes an E74 Group when it exhibits organizational characteristics usually typified by a set of ideas or beliefs held in common, or actions performed together. These might be communication, creating some common artifact, a common purpose such as study, worship, business, sports, etc. Nationality can be modeled as membership in an E74 Group (cf. HumanML markup). Married couples and other concepts of family are regarded as particular examples of E74 Group.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E39_Actor"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E77_Persistent_Item">
+	<rdfs:label xml:lang="en">Persistent Item</rdfs:label>
+    <rdfs:label xml:lang="ru">Постоянная Сущность</rdfs:label>
+    <rdfs:label xml:lang="de">Seiendes</rdfs:label>
+    <rdfs:label xml:lang="el">Ον</rdfs:label>
+    <rdfs:label xml:lang="fr">Entité persistante</rdfs:label>
+	<rdfs:label xml:lang="pt">Entidade Persistente</rdfs:label>
+	<rdfs:label xml:lang="cn">持续性项目</rdfs:label>
+	<rdfs:comment>This class comprises items that have a persistent identity, sometimes known as “endurants” in philosophy. 
+They can be repeatedly recognized within the duration of their existence by identity criteria rather than by continuity or observation. Persistent Items can be either physical entities, such as people, animals or things, or conceptual entities such as ideas, concepts, products of the imagination or common names.
+The criteria that determine the identity of an item are often difficult to establish -; the decision depends largely on the judgement of the observer. For example, a building is regarded as no longer existing if it is dismantled and the materials reused in a different configuration. On the other hand, human beings go through radical and profound changes during their life-span, affecting both material composition and form, yet preserve their identity by other criteria. Similarly, inanimate objects may be subject to exchange of parts and matter. The class E77 Persistent Item does not take any position about the nature of the applicable identity criteria and if actual knowledge about identity of an instance of this class exists. There may be cases, where the identity of an E77 Persistent Item is not decidable by a certain state of knowledge.
+The main classes of objects that fall outside the scope the E77 Persistent Item class are temporal objects such as periods, events and acts, and descriptive properties. </rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E1_CRM_Entity"/>
+</rdfs:Class>
+
+<rdfs:Class rdf:about="E89_Propositional_Object">
+	<rdfs:label xml:lang="de">Aussagenobjekt</rdfs:label>
+	<rdfs:label xml:lang="en">Propositional Object</rdfs:label>
+	<rdfs:label xml:lang="cn">陈述性物件</rdfs:label>
+	<rdfs:comment>This class comprises immaterial items, including but not limited to stories, plots, procedural prescriptions, algorithms, laws of physics or images that are, or represent in some sense, sets of propositions about real or imaginary things and that are documented as single units or serve as topics of discourse. 
+	
+This class also comprises items that are “about” something in the sense of a subject. In the wider sense, this class includes expressions of psychological value such as non-figural art and musical themes. However, conceptual items such as types and classes are not instances of E89 Propositional Object. This should not be confused with the definition of a type, which is indeed an instance of E89 Propositional Object.
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E28_Conceptual_Object"/>
+</rdfs:Class>
+<rdfs:Class rdf:about="E90_Symbolic_Object">
+	<rdfs:label xml:lang="de">Symbolisches Objekt</rdfs:label>
+	<rdfs:label xml:lang="en">Symbolic Object</rdfs:label>
+	<rdfs:label xml:lang="cn">符号物件</rdfs:label>
+	<rdfs:comment>This class comprises identifiable symbols and any aggregation of symbols, such as characters, identifiers, traffic signs, emblems, texts, data sets, images, musical scores, multimedia objects, computer program code or mathematical formulae that have an objectively recognizable structure and that are documented as single units.
+	It includes sets of signs of any nature, which may serve to designate something, or to communicate some propositional content.
+	An instance of E90 Symbolic Object does not depend on a specific physical carrier, which can include human memory, and it can exist on one or more carriers simultaneously. An instance of E90 Symbolic Object may or may not have a specific meaning, for example an arbitrary character string.
+	In some cases, the content of an instance of E90 Symbolic Object may completely be represented by a serialized content model, such.. as the property P3 has note allows for describing this content model…P3.1 has type: E55 Type to specify the encoding..
+</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="E28_Conceptual_Object"/>
+	<rdfs:subClassOf rdf:resource="E72_Legal_Object"/>
+</rdfs:Class>
+
+<rdf:Property rdf:about="P1_is_identified_by">
+	<rdfs:label xml:lang="el">αναγνωρίζεται ως</rdfs:label>
+    <rdfs:label xml:lang="de">wird bezeichnet als</rdfs:label>
+    <rdfs:label xml:lang="en">is identified by</rdfs:label>
+    <rdfs:label xml:lang="ru">идентифицируется посредством</rdfs:label>
+    <rdfs:label xml:lang="fr">est identifiée par</rdfs:label>
+	<rdfs:label xml:lang="pt">é identificado por</rdfs:label>
+	<rdfs:label xml:lang="cn">有识别称号</rdfs:label>
+	<rdfs:comment>This property describes the naming or identification of any real world item by a name or any other identifier. 
+This property is intended for identifiers in general use, which form part of the world the model intends to describe, and not merely for internal database identifiers which are specific to a technical system, unless these latter also have a more general use outside the technical context. This property includes in particular identification by mathematical expressions such as coordinate systems used for the identification of instances of E53 Place. The property does not reveal anything about when, where and by whom this identifier was used. A more detailed representation can be made using the fully developed (i.e. indirect) path through E15 Identifier Assignment.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="E41_Appellation"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P1i_identifies">
+	<rdfs:label xml:lang="de">bezeichnet</rdfs:label>
+	<rdfs:label xml:lang="ru">идентифицирует</rdfs:label>
+	<rdfs:label xml:lang="fr">identifie</rdfs:label>
+    <rdfs:label xml:lang="el">είναι αναγνωριστικό</rdfs:label>
+    <rdfs:label xml:lang="en">identifies</rdfs:label>
+	<rdfs:label xml:lang="pt">identifica</rdfs:label>
+	<rdfs:label xml:lang="cn">被用来识别</rdfs:label>
+	<rdfs:domain rdf:resource="E41_Appellation"/>
+	<rdfs:range rdf:resource="E1_CRM_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P2_has_type">
+	<rdfs:label xml:lang="de">hat den Typus</rdfs:label>
+    <rdfs:label xml:lang="en">has type</rdfs:label>
+    <rdfs:label xml:lang="el">έχει τύπο</rdfs:label>
+    <rdfs:label xml:lang="fr">est de type</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет тип</rdfs:label>
+	<rdfs:label xml:lang="pt">é do tipo</rdfs:label>
+	<rdfs:label xml:lang="cn">有类型</rdfs:label>
+	<rdfs:comment>This property allows sub typing of CRM entities - a form of specialisation – through the use of a terminological hierarchy, or thesaurus. 
+The CRM is intended to focus on the high-level entities and relationships needed to describe data structures. Consequently, it does not specialise entities any further than is required for this immediate purpose. However, entities in the isA hierarchy of the CRM may by specialised into any number of sub entities, which can be defined in the E55 Type hierarchy. E51 Contact Point, for example, may be specialised into “e-mail address”, “telephone number”, “post office box”, “URL” etc. none of which figures explicitly in the CRM hierarchy. Sub typing obviously requires consistency between the meaning of the terms assigned and the more general intent of the CRM entity in question.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="E55_Type"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P2i_is_type_of">
+<rdfs:label xml:lang="ru">является типом для</rdfs:label>
+  <rdfs:label xml:lang="fr">est le type de</rdfs:label>
+    <rdfs:label xml:lang="el">είναι ο τύπος του/της</rdfs:label>
+    <rdfs:label xml:lang="de">ist Typus von</rdfs:label>
+    <rdfs:label xml:lang="en">is type of</rdfs:label>
+	<rdfs:label xml:lang="pt">é o tipo de</rdfs:label>
+	<rdfs:label xml:lang="cn">被用来分类</rdfs:label>
+	<rdfs:domain rdf:resource="E55_Type"/>
+	<rdfs:range rdf:resource="E1_CRM_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P3_has_note">
+	<rdfs:label xml:lang="de">hat Anmerkung</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет примечание</rdfs:label>
+    <rdfs:label xml:lang="en">has note</rdfs:label>
+    <rdfs:label xml:lang="fr">a pour note</rdfs:label>
+    <rdfs:label xml:lang="el">έχει επεξήγηση</rdfs:label>
+	<rdfs:label xml:lang="pt">tem nota</rdfs:label>
+	<rdfs:label xml:lang="cn">有说明</rdfs:label>
+	<rdfs:comment>This property is a container for all informal descriptions about an object that have not been expressed in terms of CRM constructs. 
+In particular it captures the characterisation of the item itself, its internal structures, appearance etc.
+Like property P2 has type (is type of), this property is a consequence of the restricted focus of the CRM. The aim is not to capture, in a structured form, everything that can be said about an item; indeed, the CRM formalism is not regarded as sufficient to express everything that can be said. Good practice requires use of distinct note fields for different aspects of a characterisation. The P3.1 has type property of P3 has note allows differentiation of specific notes, e.g. “construction”, “decoration” etc. 
+An item may have many notes, but a note is attached to a specific item.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P4_has_time-span">
+<rdfs:label xml:lang="fr">a pour durée</rdfs:label>
+    <rdfs:label xml:lang="en">has time-span</rdfs:label>
+   <rdfs:label xml:lang="de">hat Zeitspanne</rdfs:label>
+    <rdfs:label xml:lang="el">βρισκόταν σε εξέλιξη</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет временной отрезок</rdfs:label>
+	<rdfs:label xml:lang="pt">tem período de tempo</rdfs:label>
+	<rdfs:label xml:lang="cn">发生时段是</rdfs:label>
+	<rdfs:comment>This property describes the temporal confinement of an instance of an E2 Temporal Entity.
+The related E52 Time-Span is understood as the real Time-Span during which the phenomena were active, which make up the temporal entity instance. It does not convey any other meaning than a positioning on the “time-line” of chronology. The Time-Span in turn is approximated by a set of dates (E61 Time Primitive). A temporal entity can have in reality only one Time-Span, but there may exist alternative opinions about it, which we would express by assigning multiple Time-Spans. Related temporal entities may share a Time-Span. Time-Spans may have completely unknown dates but other descriptions by which we can infer knowledge.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E2_Temporal_Entity"/>
+	<rdfs:range rdf:resource="E52_Time-Span"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P4i_is_time-span_of">
+	<rdfs:label xml:lang="en">is time-span of</rdfs:label>
+    <rdfs:label xml:lang="el">είναι χρονικό διάστημα του/της</rdfs:label>
+    <rdfs:label xml:lang="fr">est la durée de</rdfs:label>
+    <rdfs:label xml:lang="ru">является временным отрезком для</rdfs:label>
+	<rdfs:label xml:lang="de">ist Zeitspanne von</rdfs:label>
+	<rdfs:label xml:lang="pt">é o período de tempo de</rdfs:label>
+	<rdfs:label xml:lang="cn">开始并完成了</rdfs:label>
+
+	<rdfs:domain rdf:resource="E52_Time-Span"/>
+	<rdfs:range rdf:resource="E2_Temporal_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P7_took_place_at">
+	<rdfs:label xml:lang="fr">a eu lieu dans</rdfs:label>
+    <rdfs:label xml:lang="ru">совершался на</rdfs:label>
+   <rdfs:label xml:lang="el">έλαβε χώρα σε</rdfs:label>
+    <rdfs:label xml:lang="de">fand statt in</rdfs:label>
+    <rdfs:label xml:lang="en">took place at</rdfs:label>
+	<rdfs:label xml:lang="pt">ocorreu em</rdfs:label>
+	<rdfs:label xml:lang="cn">发生地在</rdfs:label>
+	<rdfs:comment>This property describes the spatial location of an instance of E4 Period. 
+The related E53 Place should be seen as an approximation of the geographical area within which the phenomena that characterise the period in question occurred. P7took place at (witnessed) does not convey any meaning other than spatial positioning (generally on the surface of the earth).  For example, the period “R?volution fran?aise” can be said to have taken place in “France”, the “Victorian” period, may be said to have taken place in “Britain” and its colonies, as well as other parts of Europe and north America.
+A period can take place at multiple locations.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E4_Period"/>
+	<rdfs:range rdf:resource="E53_Place"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P7i_witnessed">
+	<rdfs:label xml:lang="fr">a été témoin de</rdfs:label>
+    <rdfs:label xml:lang="en">witnessed</rdfs:label>
+    <rdfs:label xml:lang="de">bezeugte</rdfs:label>
+	<rdfs:label xml:lang="ru">был местом совершения</rdfs:label>
+    <rdfs:label xml:lang="el">υπήρξε τόπος του</rdfs:label>
+	<rdfs:label xml:lang="pt">testemunhou</rdfs:label>
+	<rdfs:label xml:lang="cn">发生过</rdfs:label>
+
+	<rdfs:domain rdf:resource="E53_Place"/>
+	<rdfs:range rdf:resource="E4_Period"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P10_falls_within">
+	<rdfs:label xml:lang="ru">находится в пределах</rdfs:label>
+    <rdfs:label xml:lang="el">εμπίπτει</rdfs:label>
+    <rdfs:label xml:lang="fr">s’insère dans le cours de</rdfs:label>
+	<rdfs:label xml:lang="en">falls within</rdfs:label>
+    <rdfs:label xml:lang="de">fällt in</rdfs:label>
+    <rdfs:label xml:lang="pt">está contido em</rdfs:label>
+	<rdfs:label xml:lang="cn">发生时间涵盖於</rdfs:label>
+	<rdfs:comment>This property describes an instance of E4 Period, which falls within the E53 Place and E52 Time-Span of another. 
+The difference with P9 consists of (forms part of) is subtle. Unlike P9 consists of (forms part of), P10 falls within (contains) does not imply any logical connection between the two periods and it may refer to a period of a completely different type.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E4_Period"/>
+	<rdfs:range rdf:resource="E4_Period"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P10i_contains">
+	<rdfs:label xml:lang="el">περιλαμβάνει</rdfs:label>
+    <rdfs:label xml:lang="ru">содержит</rdfs:label>
+	<rdfs:label xml:lang="en">contains</rdfs:label>
+    <rdfs:label xml:lang="fr">contient</rdfs:label>
+	<rdfs:label xml:lang="de">enthält</rdfs:label>
+	<rdfs:label xml:lang="pt">contém</rdfs:label>
+	<rdfs:label xml:lang="cn">时间上涵盖</rdfs:label>
+
+	<rdfs:domain rdf:resource="E4_Period"/>
+	<rdfs:range rdf:resource="E4_Period"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P11_had_participant">
+	<rdfs:label xml:lang="fr">a eu pour participant</rdfs:label>
+	<rdfs:label xml:lang="ru">имел участника</rdfs:label>
+	<rdfs:label xml:lang="de">hatte Teilnehmer</rdfs:label>
+	<rdfs:label xml:lang="en">had participant</rdfs:label>
+    <rdfs:label xml:lang="el">είχε συμμέτοχο</rdfs:label>
+	<rdfs:label xml:lang="pt">tem participante</rdfs:label>
+	<rdfs:label xml:lang="cn">有参与者</rdfs:label>
+	<rdfs:comment>This property describes the active or passive participation of instances of E39 Actors in an E5 Event. 
+It connects the life-line of the related E39 Actor with the E53 Place and E50 Date of the event. The property implies that the Actor was involved in the event but does not imply any causal relationship. The subject of a portrait can be said to have participated in the creation of the portrait.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E5_Event"/>
+	<rdfs:range rdf:resource="E39_Actor"/>
+	<rdfs:subPropertyOf rdf:resource="P12_occurred_in_the_presence_of"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P11i_participated_in">
+	<rdfs:label xml:lang="el">συμμετείχε σε</rdfs:label>
+    <rdfs:label xml:lang="de">nahm Teil an</rdfs:label>
+    <rdfs:label xml:lang="ru">участвовал в</rdfs:label>
+    <rdfs:label xml:lang="en">participated in</rdfs:label>
+    <rdfs:label xml:lang="fr">a participé à</rdfs:label>
+	<rdfs:label xml:lang="pt">participa em</rdfs:label>
+	<rdfs:label xml:lang="cn">参与了</rdfs:label>
+
+	<rdfs:domain rdf:resource="E39_Actor"/>
+	<rdfs:range rdf:resource="E5_Event"/>
+	<rdfs:subPropertyOf rdf:resource="P12i_was_present_at"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P12_occurred_in_the_presence_of">
+	<rdfs:label xml:lang="en">occurred in the presence of</rdfs:label>
+    <rdfs:label xml:lang="ru">появился в присутствии</rdfs:label>
+    <rdfs:label xml:lang="de">fand statt im Beisein von</rdfs:label>
+    <rdfs:label xml:lang="el">συνέβη παρουσία του/της</rdfs:label>
+    <rdfs:label xml:lang="fr">est arrivé en présence de</rdfs:label>
+	<rdfs:label xml:lang="pt">ocorreu na presença de</rdfs:label>
+	<rdfs:label xml:lang="cn">发生现场存在</rdfs:label>
+	<rdfs:comment>This property describes the active or passive presence of an E77 Persistent Item in an E5 Event without implying any specific role. 
+It connects the history of a thing with the E53 Place and E50 Date of an event. For example, an object may be the desk, now in a museum on which a treaty was signed. The presence of an immaterial thing implies the presence of at least one of its carriers.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E5_Event"/>
+	<rdfs:range rdf:resource="E77_Persistent_Item"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P12i_was_present_at">
+<rdfs:label xml:lang="en">was present at</rdfs:label>
+   <rdfs:label xml:lang="el">ήταν παρών/παρούσα/παρόν σε</rdfs:label>
+    <rdfs:label xml:lang="de">war anwesend bei</rdfs:label>
+    <rdfs:label xml:lang="fr">était présent à</rdfs:label>
+    <rdfs:label xml:lang="ru">присутствовал при</rdfs:label>
+	<rdfs:label xml:lang="pt">estava presente no</rdfs:label>
+	<rdfs:label xml:lang="cn">当时在场於</rdfs:label>
+
+	<rdfs:domain rdf:resource="E77_Persistent_Item"/>
+	<rdfs:range rdf:resource="E5_Event"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P14_carried_out_by">
+	<rdfs:label xml:lang="de">wurde ausgeführt von</rdfs:label>
+    <rdfs:label xml:lang="fr">réalisée par</rdfs:label>
+    <rdfs:label xml:lang="en">carried out by</rdfs:label>
+    <rdfs:label xml:lang="el">πραγματοποιήθηκε από</rdfs:label>
+    <rdfs:label xml:lang="ru">выполнялся</rdfs:label>
+	<rdfs:label xml:lang="pt">realizada por</rdfs:label>
+	<rdfs:label xml:lang="cn">有执行者</rdfs:label>
+	<rdfs:comment>This property describes the active participation of an E39 Actor in an E7 Activity. 
+It implies causal or legal responsibility. The P14.1 in the role of property of the property allows the nature of an Actor’s participation to be specified.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E7_Activity"/>
+	<rdfs:range rdf:resource="E39_Actor"/>
+	<rdfs:subPropertyOf rdf:resource="P11_had_participant"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P14i_performed">
+	<rdfs:label xml:lang="ru">выполнял</rdfs:label>
+   <rdfs:label xml:lang="el">πραγματοποίησε</rdfs:label>
+    <rdfs:label xml:lang="de">führte aus</rdfs:label>
+	<rdfs:label xml:lang="en">performed</rdfs:label>
+    <rdfs:label xml:lang="fr">a exécuté</rdfs:label>
+	<rdfs:label xml:lang="pt">executou</rdfs:label>
+	<rdfs:label xml:lang="cn">执行了</rdfs:label>
+
+	<rdfs:domain rdf:resource="E39_Actor"/>
+	<rdfs:range rdf:resource="E7_Activity"/>
+	<rdfs:subPropertyOf rdf:resource="P11i_participated_in"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P15_was_influenced_by">
+	<rdfs:label xml:lang="de">wurde beeinflußt durch</rdfs:label>
+    <rdfs:label xml:lang="fr">a été influencée par</rdfs:label>
+    <rdfs:label xml:lang="el">επηρεάστηκε από</rdfs:label>
+    <rdfs:label xml:lang="ru">находился под влиянием</rdfs:label>
+    <rdfs:label xml:lang="en">was influenced by</rdfs:label>
+	<rdfs:label xml:lang="pt">foi influenciado por </rdfs:label>
+	<rdfs:label xml:lang="cn">有影响事物</rdfs:label>
+	<rdfs:comment>This is a high level property, which captures the relationship between an E7 Activity and anything that may have had some bearing upon it.
+The property has more specific sub properties.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E7_Activity"/>
+	<rdfs:range rdf:resource="E1_CRM_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P15i_influenced">
+	<rdfs:label xml:lang="ru">оказал влияние на</rdfs:label>
+    <rdfs:label xml:lang="el">επηρέασε</rdfs:label>
+    <rdfs:label xml:lang="fr">a influencé</rdfs:label>
+    <rdfs:label xml:lang="de">beeinflußte</rdfs:label>
+    <rdfs:label xml:lang="en">influenced</rdfs:label>
+    <rdfs:label xml:lang="pt">influenciou</rdfs:label>
+	<rdfs:label xml:lang="cn">影响了</rdfs:label>
+
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="E7_Activity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P16_used_specific_object">
+	<rdfs:label xml:lang="fr">a utilisé l'objet spécifique</rdfs:label>
+    <rdfs:label xml:lang="el">χρησιμοποίησε αντικείμενο</rdfs:label>
+    <rdfs:label xml:lang="en">used specific object</rdfs:label>
+	<rdfs:label xml:lang="de">benutzte das bestimmte Objekt</rdfs:label>
+	<rdfs:label xml:lang="ru">использовал особый объект</rdfs:label>
+	<rdfs:label xml:lang="pt">usou objeto específico</rdfs:label>
+	<rdfs:label xml:lang="cn">使用特定物</rdfs:label>
+	<rdfs:comment>This property describes the use of material or immaterial things in a way essential to the performance or the outcome of an E7 Activity. 
+This property typically applies to tools, instruments, moulds, raw materials and items embedded in a product. It implies that the presence of the object in question was a necessary condition for the action. For example, the activity of writing this text required the use of a computer. An immaterial thing can be used if at least one of its carriers is present. For example, the software tools on a computer.
+Another example is the use of a particular name by a particular group of people over some span to identify a thing, such as a settlement. In this case, the physical carriers of this name are at least the people understanding its use.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E7_Activity"/>
+	<rdfs:range rdf:resource="E70_Thing"/>
+	<rdfs:subPropertyOf rdf:resource="P12_occurred_in_the_presence_of"/>
+	<rdfs:subPropertyOf rdf:resource="P15_was_influenced_by"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P16i_was_used_for">
+	<rdfs:label xml:lang="fr">a été utilisé pour</rdfs:label>
+    <rdfs:label xml:lang="de">wurde benutzt für</rdfs:label>
+    <rdfs:label xml:lang="ru">был использован для</rdfs:label>
+	<rdfs:label xml:lang="en">was used for</rdfs:label>
+	<rdfs:label xml:lang="el">χρησιμοποιήθηκε για</rdfs:label>
+	<rdfs:label xml:lang="pt">foi usado por</rdfs:label>
+	<rdfs:label xml:lang="cn">被用於</rdfs:label>
+
+	<rdfs:domain rdf:resource="E70_Thing"/>
+	<rdfs:range rdf:resource="E7_Activity"/>
+	<rdfs:subPropertyOf rdf:resource="P12i_was_present_at"/>
+	<rdfs:subPropertyOf rdf:resource="P15i_influenced"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P20_had_specific_purpose">
+	<rdfs:label xml:lang="de">hatte den bestimmten Zweck</rdfs:label>
+    <rdfs:label xml:lang="fr">avait pour but spécifique</rdfs:label>
+    <rdfs:label xml:lang="el">είχε συγκεκριμένο σκοπό</rdfs:label>
+    <rdfs:label xml:lang="en">had specific purpose</rdfs:label>
+    <rdfs:label xml:lang="ru">имел конкретную цель</rdfs:label>
+	<rdfs:label xml:lang="pt">tinha propósito específico</rdfs:label>
+	<rdfs:label xml:lang="cn">有特定目地</rdfs:label>
+	<rdfs:comment>This property identifies the relationship between a preparatory activity and the event it is intended to be preparation for.
+This includes activities, orders and other organisational actions, taken in preparation for other activities or events. 
+P20 had specific purpose (was purpose of) implies that an activity succeeded in achieving its aim. If it does not succeed, such as the setting of a trap that did not catch anything, one may document the unrealized intention using P21 had general purpose (was purpose of):E55 Type and/or  P33 used specific technique (was used by): E29 Design or Procedure.</rdfs:comment>
+	<rdfs:domain rdf:resource="E7_Activity"/>
+	<rdfs:range rdf:resource="E5_Event"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P20i_was_purpose_of">
+	<rdfs:label xml:lang="de">war Zweck von</rdfs:label>
+	<rdfs:label xml:lang="ru">был целью для</rdfs:label>
+	<rdfs:label xml:lang="el">ήταν σκοπός του/της</rdfs:label>
+	<rdfs:label xml:lang="fr">était le but de</rdfs:label>
+	<rdfs:label xml:lang="en">was purpose of</rdfs:label>
+	<rdfs:label xml:lang="pt">era o propósito de</rdfs:label>
+	<rdfs:label xml:lang="cn">之準備活動是</rdfs:label>
+
+	<rdfs:domain rdf:resource="E5_Event"/>
+	<rdfs:range rdf:resource="E7_Activity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P31_has_modified">
+	<rdfs:label xml:lang="de">veränderte</rdfs:label>
+    <rdfs:label xml:lang="fr">a modifié</rdfs:label>
+    <rdfs:label xml:lang="en">has modified</rdfs:label>
+    <rdfs:label xml:lang="ru">изменил</rdfs:label>
+	<rdfs:label xml:lang="el">τροποποίησε</rdfs:label>
+	<rdfs:label xml:lang="pt">modificou</rdfs:label>
+	<rdfs:label xml:lang="cn">修改了</rdfs:label>
+	
+	<rdfs:comment>This property identifies the E24 Physical Man-Made Thing modified in an E11 Modification.
+If a modification is applied to a non-man-made object, it is regarded as an E22 Man-Made Object from that time onwards. 
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E11_Modification"/>
+	<rdfs:range rdf:resource="E24_Physical_Man-Made_Thing"/>
+	<rdfs:subPropertyOf rdf:resource="P12_occurred_in_the_presence_of"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P31i_was_modified_by">
+	<rdfs:label xml:lang="fr">a été modifié par</rdfs:label>
+    <rdfs:label xml:lang="de">wurde verändert durch</rdfs:label>
+    <rdfs:label xml:lang="el">τροποποιήθηκε από</rdfs:label>
+    <rdfs:label xml:lang="ru">был изменен посредством</rdfs:label>
+     <rdfs:label xml:lang="en">was modified by</rdfs:label>
+	 <rdfs:label xml:lang="pt">foi modificada por</rdfs:label>
+	<rdfs:label xml:lang="cn">被修改於</rdfs:label>
+
+	<rdfs:domain rdf:resource="E24_Physical_Man-Made_Thing"/>
+	<rdfs:range rdf:resource="E11_Modification"/>
+	<rdfs:subPropertyOf rdf:resource="P12i_was_present_at"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P43_has_dimension">
+	<rdfs:label xml:lang="de">hat Dimension</rdfs:label>
+    <rdfs:label xml:lang="fr">a pour dimension</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет величину</rdfs:label>
+    <rdfs:label xml:lang="en">has dimension</rdfs:label>
+    <rdfs:label xml:lang="el">έχει μέγεθος</rdfs:label>
+	<rdfs:label xml:lang="pt">tem dimensão</rdfs:label>
+	<rdfs:label xml:lang="cn">有规模数量</rdfs:label>
+	<rdfs:comment>This property records a E54 Dimension of some E70 Thing.
+It is a shortcut of the more fully developed path from E70 Thing through P39 measured (was measured by), E16 Measurement P40 observed dimension (was observed in) to E54 Dimension. It offers no information about how and when an E54 Dimension was established, nor by whom.
+An instance of E54 Dimension is specific to an instance of E70 Thing.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E70_Thing"/>
+	<rdfs:range rdf:resource="E54_Dimension"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P43i_is_dimension_of">
+	<rdfs:label xml:lang="de">ist Dimension von</rdfs:label>
+    <rdfs:label xml:lang="en">is dimension of</rdfs:label>
+    <rdfs:label xml:lang="ru">является величиной для</rdfs:label>
+    <rdfs:label xml:lang="fr">est dimension de</rdfs:label>
+    <rdfs:label xml:lang="el">είναι μέγεθος του</rdfs:label>
+	<rdfs:label xml:lang="pt">é dimensão de</rdfs:label>
+	<rdfs:label xml:lang="cn">估量的标的物是</rdfs:label>
+
+	<rdfs:domain rdf:resource="E54_Dimension"/>
+	<rdfs:range rdf:resource="E70_Thing"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P46_is_composed_of">
+	<rdfs:label xml:lang="en">is composed of</rdfs:label>
+    <rdfs:label xml:lang="fr">est composée de</rdfs:label>
+    <rdfs:label xml:lang="el">αποτελείται από</rdfs:label>
+    <rdfs:label xml:lang="de">ist zusammengesetzt aus</rdfs:label>
+	<rdfs:label xml:lang="ru">составлен из</rdfs:label>
+	<rdfs:label xml:lang="pt">é composto de</rdfs:label>
+	<rdfs:label xml:lang="cn">有组件</rdfs:label>
+
+   <rdfs:comment>This property allows instances of E18 Physical Thing to be analysed into component elements.
+Component elements, since they are themselves instances of E18 Physical Thing, may be further analysed into sub-components, thereby creating a hierarchy of part decomposition. An instance of E18 Physical Thing may be shared between multiple wholes, for example two buildings may share a common wall.
+This property is intended to describe specific components that are individually documented, rather than general aspects. Overall descriptions of the structure of an instance of E18 Physical Thing are captured by the P3 has note property.
+The instances of E57 Materials of which an item of E18 Physical Thing is composed should be documented using P45 consists of (is incorporated in).
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E18_Physical_Thing"/>
+	<rdfs:range rdf:resource="E18_Physical_Thing"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P46i_forms_part_of">
+	<rdfs:label xml:lang="ru">формирует часть</rdfs:label>
+    <rdfs:label xml:lang="fr">fait partie de</rdfs:label>
+   <rdfs:label xml:lang="el">αποτελεί μέρος του/της</rdfs:label>
+    <rdfs:label xml:lang="de">bildet Teil von</rdfs:label>
+    <rdfs:label xml:lang="en">forms part of</rdfs:label>
+	<rdfs:label xml:lang="pt">faz parte de</rdfs:label>
+	<rdfs:label xml:lang="cn">被用来组成</rdfs:label>
+
+	<rdfs:domain rdf:resource="E18_Physical_Thing"/>
+	<rdfs:range rdf:resource="E18_Physical_Thing"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P59_has_section">
+	<rdfs:label xml:lang="en">has section</rdfs:label>
+    <rdfs:label xml:lang="el">έχει τομέα</rdfs:label>
+    <rdfs:label xml:lang="de">hat Bereich</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет район</rdfs:label>
+	<rdfs:label xml:lang="fr">a pour section</rdfs:label>
+	<rdfs:label xml:lang="pt">tem seção</rdfs:label>
+	<rdfs:label xml:lang="cn">有区域</rdfs:label>
+	<rdfs:comment>This property links an area to the instance of E18 Physical Thing upon which it is found.
+It is typically used when a named E46 Section Definition is not appropriate.
+E18 Physical Thing may be subdivided into arbitrary regions. 
+P59 has section (is located on or within) is a shortcut. If the E53 Place is identified by a Section Definition, a more detailed representation can make use of the fully developed (i.e. indirect) path from E18 Physical Thing through P58 has section definition (defines section), E46 Section Definition, P87 is identified by (identifies) to E53 Place. A Place can only be located on or within one Physical Object.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E18_Physical_Thing"/>
+	<rdfs:range rdf:resource="E53_Place"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P59i_is_located_on_or_within">
+	<rdfs:label xml:lang="ru">находится на или внутри</rdfs:label>
+	<rdfs:label xml:lang="de">befindet sich auf oder in</rdfs:label>
+    <rdfs:label xml:lang="el">βρίσκεται σε ή εντός</rdfs:label>
+    <rdfs:label xml:lang="fr">se situe sur ou dans</rdfs:label>
+    <rdfs:label xml:lang="en">is located on or within</rdfs:label>
+	<rdfs:label xml:lang="pt">está localizada sobre ou dentro de</rdfs:label>
+	<rdfs:label xml:lang="cn">位於</rdfs:label>
+
+	<rdfs:domain rdf:resource="E53_Place"/>
+	<rdfs:range rdf:resource="E18_Physical_Thing"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P67_refers_to">
+	<rdfs:label xml:lang="el">αναφέρεται σε</rdfs:label>
+    <rdfs:label xml:lang="en">refers to</rdfs:label>
+    <rdfs:label xml:lang="ru">ссылается на</rdfs:label>
+	<rdfs:label xml:lang="fr">fait référence à</rdfs:label>
+    <rdfs:label xml:lang="de">verweist auf</rdfs:label>
+	<rdfs:label xml:lang="pt">referencia</rdfs:label>
+	<rdfs:label xml:lang="cn">论及</rdfs:label>
+
+	<rdfs:comment>This property documents that an E89 Propositional Object makes a statement about an instance of E1 CRM Entity. P67 refers to (is referred to by) has the P67.1 has type link to an instance of E55 Type. This is intended to allow a more detailed description of the type of reference. This differs from P129 is about (is subject of), which describes the primary subject or subjects of the E89 Propositional Object.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E89_Propositional_Object"/>
+	<rdfs:range rdf:resource="E1_CRM_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P67i_is_referred_to_by">
+	<rdfs:label xml:lang="fr">est référencé par</rdfs:label>
+	<rdfs:label xml:lang="el">αναφέρεται από</rdfs:label>
+	<rdfs:label xml:lang="de">wird angeführt von</rdfs:label>
+    <rdfs:label xml:lang="en">is referred to by</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет ссылку на себя от</rdfs:label>
+	<rdfs:label xml:lang="pt">é referenciado por</rdfs:label>
+	<rdfs:label xml:lang="cn">被论及於</rdfs:label>
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="E89_Propositional_Object"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P75_possesses">
+	<rdfs:label xml:lang="ru">владеет</rdfs:label>
+	<rdfs:label xml:lang="el">κατέχει</rdfs:label>
+	<rdfs:label xml:lang="de">besitzt</rdfs:label>
+    <rdfs:label xml:lang="fr">est détenteur de</rdfs:label>
+    <rdfs:label xml:lang="en">possesses</rdfs:label>
+	<rdfs:label xml:lang="pt">é detentor de</rdfs:label>
+	<rdfs:label xml:lang="cn">拥有</rdfs:label>
+
+	<rdfs:comment>This property identifies former or current instances of E30 Rights held by an E39 Actor.</rdfs:comment>
+	<rdfs:domain rdf:resource="E39_Actor"/>
+	<rdfs:range rdf:resource="E30_Right"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P75i_is_possessed_by">
+	<rdfs:label xml:lang="el">κατέχεται από</rdfs:label>
+    <rdfs:label xml:lang="ru">принадлежит</rdfs:label>
+    <rdfs:label xml:lang="de">sind im Besitz von</rdfs:label>
+    <rdfs:label xml:lang="fr">est détenu par</rdfs:label>
+    <rdfs:label xml:lang="en">is possessed by</rdfs:label>
+	<rdfs:label xml:lang="pt">são detidos por</rdfs:label>
+	<rdfs:label xml:lang="cn">有拥有者</rdfs:label>
+
+	<rdfs:domain rdf:resource="E30_Right"/>
+	<rdfs:range rdf:resource="E39_Actor"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P81_ongoing_throughout">
+	<rdfs:label xml:lang="en">ongoing throughout</rdfs:label>
+    <rdfs:label xml:lang="el">καθόλη τη διάρκεια του/της</rdfs:label>
+    <rdfs:label xml:lang="de">andauernd während</rdfs:label>
+    <rdfs:label xml:lang="fr">couvre au moins</rdfs:label>
+    <rdfs:label xml:lang="ru">длится в течение</rdfs:label>
+	<rdfs:label xml:lang="pt">abrange no mínimo</rdfs:label>
+	<rdfs:label xml:lang="cn">时段的数值至少涵盖</rdfs:label>
+
+	<rdfs:comment>This property describes the minimum period of time covered by an E52 Time-Span.
+Since Time-Spans may not have precisely known temporal extents, the CRM supports statements about the minimum and maximum temporal extents of Time-Spans. This property allows a Time-Span’s minimum temporal extent (i.e. its inner boundary) to be assigned an E61 Time Primitive value. Time Primitives are treated by the CRM as application or system specific date intervals, and are not further analysed.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E52_Time-Span"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P82_at_some_time_within">
+	<rdfs:label xml:lang="el">κάποτε εντός</rdfs:label>
+  <rdfs:label xml:lang="ru">некоторое время в течение</rdfs:label>
+   <rdfs:label xml:lang="de">irgendwann innerhalb von</rdfs:label>
+    <rdfs:label xml:lang="fr">couvre au plus</rdfs:label>
+    <rdfs:label xml:lang="en">at some time within</rdfs:label>
+	<rdfs:label xml:lang="pt">abrange no máximo</rdfs:label>
+	<rdfs:label xml:lang="cn">时段的数值不会超越</rdfs:label>
+
+	<rdfs:comment>This property describes the maximum period of time within which an E52 Time-Span falls.
+Since Time-Spans may not have precisely known temporal extents, the CRM supports statements about the minimum and maximum temporal extents of Time-Spans. This property allows a Time-Span’s maximum temporal extent (i.e. its outer boundary) to be assigned an E61 Time Primitive value. Time Primitives are treated by the CRM as application or system specific date intervals, and are not further analysed.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E52_Time-Span"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P89_falls_within">
+	<rdfs:label xml:lang="fr">s’insère dans</rdfs:label>
+    <rdfs:label xml:lang="en">falls within</rdfs:label>
+    <rdfs:label xml:lang="ru">содержится в</rdfs:label>
+	<rdfs:label xml:lang="de">fällt in</rdfs:label>
+	<rdfs:label xml:lang="el">περιέχεται σε</rdfs:label>
+	<rdfs:label xml:lang="pt">está contido em</rdfs:label>
+	<rdfs:label xml:lang="cn">空间上被包围於</rdfs:label>
+
+	<rdfs:comment>This property identifies the instances of E53 Places that fall within the area covered by another Place.
+It addresses spatial containment only, and no ‘whole-part’ relationship between the two places is implied.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E53_Place"/>
+	<rdfs:range rdf:resource="E53_Place"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P89i_contains">
+	<rdfs:label xml:lang="fr">inclut</rdfs:label>
+    <rdfs:label xml:lang="ru">содержит</rdfs:label>
+	<rdfs:label xml:lang="el">περιέχει</rdfs:label>
+    <rdfs:label xml:lang="de">enthält</rdfs:label>
+    <rdfs:label xml:lang="en">contains</rdfs:label>
+	<rdfs:label xml:lang="pt">contém</rdfs:label>
+	<rdfs:label xml:lang="cn">空间上包含了</rdfs:label>
+
+	<rdfs:domain rdf:resource="E53_Place"/>
+	<rdfs:range rdf:resource="E53_Place"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P92_brought_into_existence">
+	<rdfs:label xml:lang="fr">a fait exister</rdfs:label>
+    <rdfs:label xml:lang="en">brought into existence</rdfs:label>
+	<rdfs:label xml:lang="ru">создал</rdfs:label>
+    <rdfs:label xml:lang="de">brachte in Existenz</rdfs:label>
+    <rdfs:label xml:lang="el">γέννησε</rdfs:label>
+	<rdfs:label xml:lang="pt">trouxe à existência</rdfs:label>
+	<rdfs:label xml:lang="cn">开始了</rdfs:label>
+
+	<rdfs:comment>This property allows an E63 Beginning of Existence event to be linked to the E77 Persistent Item brought into existence by it.
+It allows a “start” to be attached to any Persistent Item being documented i.e. E70 Thing, E72 Legal Object, E39 Actor, E41 Appellation, E51 Contact Point and E55 Type</rdfs:comment>
+	<rdfs:domain rdf:resource="E63_Beginning_of_Existence"/>
+	<rdfs:range rdf:resource="E77_Persistent_Item"/>
+	<rdfs:subPropertyOf rdf:resource="P12_occurred_in_the_presence_of"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P92i_was_brought_into_existence_by">
+	<rdfs:label xml:lang="en">was brought into existence by</rdfs:label>
+    <rdfs:label xml:lang="el">γεννήθηκε από</rdfs:label>
+    <rdfs:label xml:lang="de">wurde in Existenz gebracht durch</rdfs:label>
+    <rdfs:label xml:lang="fr">a commencé à exister du fait de</rdfs:label>
+    <rdfs:label xml:lang="ru">был создан посредством</rdfs:label>
+    <rdfs:label xml:lang="pt">passou a existir por</rdfs:label>
+	<rdfs:label xml:lang="cn">被开始於</rdfs:label>
+	
+	<rdfs:domain rdf:resource="E77_Persistent_Item"/>
+	<rdfs:range rdf:resource="E63_Beginning_of_Existence"/>
+	<rdfs:subPropertyOf rdf:resource="P12i_was_present_at"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P93_took_out_of_existence">
+	<rdfs:label xml:lang="fr">a fait cesser d’exister</rdfs:label>
+    <rdfs:label xml:lang="ru">положил конец существованию</rdfs:label>
+    <rdfs:label xml:lang="de">beendete die Existenz von</rdfs:label>
+	<rdfs:label xml:lang="en">took out of existence</rdfs:label>
+	<rdfs:label xml:lang="el">αναίρεσε</rdfs:label>
+	<rdfs:label xml:lang="pt">cessou a existência de</rdfs:label>
+	<rdfs:label xml:lang="cn">结束了</rdfs:label>
+
+	<rdfs:comment>This property allows an E64 End of Existence event to be linked to the E77 Persistent Item taken out of existence by it.
+In the case of immaterial things, the E64 End of Existence is considered to take place with the destruction of the last physical carrier.
+This allows an “end” to be attached to any Persistent Item being documented i.e. E70 Thing, E72 Legal Object, E39 Actor, E41 Appellation, E51 Contact Point and E55 Type. For many Persistent Items we know the maximum life-span and can infer, that they must have ended to exist. We assume in that case an End of Existence, which may be as unnoticeable as forgetting the secret knowledge by the last representative of some indigenous nation.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E64_End_of_Existence"/>
+	<rdfs:range rdf:resource="E77_Persistent_Item"/>
+	<rdfs:subPropertyOf rdf:resource="P12_occurred_in_the_presence_of"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P93i_was_taken_out_of_existence_by">
+	<rdfs:label xml:lang="ru">прекратил существование посредством</rdfs:label>
+	<rdfs:label xml:lang="fr">a cessé d’exister du fait de</rdfs:label>
+	<rdfs:label xml:lang="en">was taken out of existence by</rdfs:label>
+	<rdfs:label xml:lang="el">αναιρέθηκε από</rdfs:label>
+    <rdfs:label xml:lang="de">wurde seiner Existenz beraubt durch</rdfs:label>
+	<rdfs:label xml:lang="pt">deixou de existir</rdfs:label>
+	<rdfs:label xml:lang="cn">被结束於</rdfs:label>
+	
+	<rdfs:domain rdf:resource="E77_Persistent_Item"/>
+	<rdfs:range rdf:resource="E64_End_of_Existence"/>
+	<rdfs:subPropertyOf rdf:resource="P12i_was_present_at"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P94_has_created">
+	<rdfs:label xml:lang="el">δημιούργησε</rdfs:label>
+	<rdfs:label xml:lang="ru">создал</rdfs:label>
+    <rdfs:label xml:lang="en">has created</rdfs:label>
+    <rdfs:label xml:lang="de">hat erschaffen</rdfs:label>
+    <rdfs:label xml:lang="fr">a créé</rdfs:label>
+	<rdfs:label xml:lang="pt">criou</rdfs:label>
+	<rdfs:label xml:lang="cn">创造了</rdfs:label>
+
+	<rdfs:comment>This property allows a conceptual E65 Creation to be linked to the E28 Conceptual Object created by it. 
+It represents the act of conceiving the intellectual content of the E28 Conceptual Object. It does not represent the act of creating the first physical carrier of the E28 Conceptual Object. As an example, this is the composition of a poem, not its commitment to paper.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E65_Creation"/>
+	<rdfs:range rdf:resource="E28_Conceptual_Object"/>
+	<rdfs:subPropertyOf rdf:resource="P92_brought_into_existence"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P94i_was_created_by">
+	<rdfs:label xml:lang="el">δημιουργήθηκε από</rdfs:label>
+   <rdfs:label xml:lang="fr">a été créé par</rdfs:label>
+    <rdfs:label xml:lang="ru">был создан посредством</rdfs:label>
+    <rdfs:label xml:lang="en">was created by</rdfs:label>
+    <rdfs:label xml:lang="de">wurde erschaffen durch</rdfs:label>
+	<rdfs:label xml:lang="pt">foi criado por</rdfs:label>
+	<rdfs:label xml:lang="cn">被创造於</rdfs:label>
+	
+	<rdfs:domain rdf:resource="E28_Conceptual_Object"/>
+	<rdfs:range rdf:resource="E65_Creation"/>
+	<rdfs:subPropertyOf rdf:resource="P92i_was_brought_into_existence_by"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P104_is_subject_to">
+	<rdfs:label xml:lang="fr">est sujet à</rdfs:label>
+    <rdfs:label xml:lang="en">is subject to</rdfs:label>
+    <rdfs:label xml:lang="ru">является объектом для</rdfs:label>
+    <rdfs:label xml:lang="el">υπόκειται σε</rdfs:label>
+    <rdfs:label xml:lang="de">Gegenstand von</rdfs:label>
+	<rdfs:label xml:lang="pt">está sujeito à</rdfs:label>
+
+	<rdfs:label xml:lang="cn">受制於</rdfs:label>
+	<rdfs:comment>This property links a particular E72 Legal Object to the instances of E30 Right to which it is subject.
+The Right is held by an E39 Actor as described by P75 possesses (is possessed by).
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E72_Legal_Object"/>
+	<rdfs:range rdf:resource="E30_Right"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P104i_applies_to">
+	<rdfs:label xml:lang="el">ισχύει για</rdfs:label>
+   <rdfs:label xml:lang="fr">s’applique à</rdfs:label>
+    <rdfs:label xml:lang="de">findet Anwendung auf</rdfs:label>
+    <rdfs:label xml:lang="ru">применяется к</rdfs:label>
+    <rdfs:label xml:lang="en">applies to</rdfs:label>
+	<rdfs:label xml:lang="pt">se aplicam à</rdfs:label>
+	<rdfs:label xml:lang="cn">被应用於</rdfs:label>
+	
+	<rdfs:domain rdf:resource="E30_Right"/>
+	<rdfs:range rdf:resource="E72_Legal_Object"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P106_is_composed_of">
+	<rdfs:label xml:lang="de"> ist zusammengesetzt aus</rdfs:label>
+  <rdfs:label xml:lang="ru">составлен из</rdfs:label>
+    <rdfs:label xml:lang="en">is composed of</rdfs:label>
+    <rdfs:label xml:lang="fr">est composé de</rdfs:label>
+   <rdfs:label xml:lang="el">αποτελείται από</rdfs:label>
+   <rdfs:label xml:lang="pt">é composto de</rdfs:label>
+	<rdfs:label xml:lang="cn">有组成元素</rdfs:label>
+
+	<rdfs:comment>This property associates an instance of E90 Symbolic Object with a part of it that is by itself an instance of E90 Symbolic Object, such as fragments of texts or clippings from an image.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E90_Symbolic_Object"/>
+	<rdfs:range rdf:resource="E90_Symbolic_Object"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P106i_forms_part_of">
+	<rdfs:label xml:lang="ru">формирует часть</rdfs:label>
+    <rdfs:label xml:lang="el">αποτελεί μέρος του/της</rdfs:label>
+   <rdfs:label xml:lang="de">bildet Teil von</rdfs:label>
+    <rdfs:label xml:lang="fr">fait partie de</rdfs:label>
+    <rdfs:label xml:lang="en">forms part of</rdfs:label>
+	<rdfs:label xml:lang="pt">faz parte de</rdfs:label>
+	<rdfs:label xml:lang="cn">组成了</rdfs:label>
+
+	<rdfs:domain rdf:resource="E90_Symbolic_Object"/>
+	<rdfs:range rdf:resource="E90_Symbolic_Object"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P107_has_current_or_former_member">
+	<rdfs:label xml:lang="fr">a pour membre actuel ou ancien</rdfs:label>
+    <rdfs:label xml:lang="en">has current or former member</rdfs:label>
+	<rdfs:label xml:lang="el">έχει ή είχε μέλος</rdfs:label>
+    <rdfs:label xml:lang="ru">имеет действующего или бывшего члена</rdfs:label>
+    <rdfs:label xml:lang="de">hat derzeitiges oder früheres Mitglied</rdfs:label>
+	<rdfs:label xml:lang="pt">tem ou teve membro</rdfs:label>
+	<rdfs:label xml:lang="cn">有现任或前任成员</rdfs:label>
+
+	<rdfs:comment>This property relates an E39 Actor to the E74 Group of which that E39 Actor is a member.
+Groups, Legal Bodies and Persons, may all be members of Groups. A Group necessarily consists of more than one member.
+This property is a shortcut of the more fully developed path from E74 Group through P144 joined with (gained member by), E85 Joining, P143 joined (was joined by) to E39 Actor
+The property P107.1 kind of member can be used to specify the type of membership or the role the member has in the group. 
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E74_Group"/>
+	<rdfs:range rdf:resource="E39_Actor"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P107i_is_current_or_former_member_of">
+ <rdfs:label xml:lang="el">είναι ή ήταν μέλος του/της</rdfs:label>
+    <rdfs:label xml:lang="en">is current or former member of</rdfs:label>
+    <rdfs:label xml:lang="de">ist derzeitiges oder früheres Mitglied von</rdfs:label> 
+     <rdfs:label xml:lang="ru">является действующим или бывшим членом</rdfs:label>
+    <rdfs:label xml:lang="fr">est actuel ou ancien membre de</rdfs:label>
+	<rdfs:label xml:lang="pt">é ou foi membro de</rdfs:label>
+	<rdfs:label xml:lang="cn">目前或曾经加入群组</rdfs:label>
+
+	<rdfs:domain rdf:resource="E39_Actor"/>
+	<rdfs:range rdf:resource="E74_Group"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P108_has_produced">
+	<rdfs:label xml:lang="el">παρήγαγε</rdfs:label>
+    <rdfs:label xml:lang="fr">a produit</rdfs:label>
+    <rdfs:label xml:lang="ru">произвел</rdfs:label>
+    <rdfs:label xml:lang="de">hat hergestellt</rdfs:label>
+	<rdfs:label xml:lang="en">has produced</rdfs:label>
+	<rdfs:label xml:lang="pt">produziu</rdfs:label>
+	<rdfs:label xml:lang="cn">有产出物</rdfs:label>
+
+	<rdfs:comment>This property identifies the E24 Physical Man-Made Thing that came into existence as a result of an E12 Production.
+The identity of an instance of E24 Physical Man-Made Thing is not defined by its matter, but by its existence as a subject of documentation. An E12 Production can result in the creation of multiple instances of E24 Physical Man-Made Thing.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E12_Production"/>
+	<rdfs:range rdf:resource="E24_Physical_Man-Made_Thing"/>
+	<rdfs:subPropertyOf rdf:resource="P31_has_modified"/>
+	<rdfs:subPropertyOf rdf:resource="P92_brought_into_existence"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P108i_was_produced_by"> 
+	<rdfs:label xml:lang="el">παρήχθη από</rdfs:label>
+    <rdfs:label xml:lang="fr">a été produit par</rdfs:label>
+    <rdfs:label xml:lang="de">wurde hergestellt durch</rdfs:label>
+     <rdfs:label xml:lang="ru">был произведен посредством</rdfs:label>
+    <rdfs:label xml:lang="en">was produced by</rdfs:label>
+	<rdfs:label xml:lang="pt">foi produzido por</rdfs:label>
+	<rdfs:label xml:lang="cn">被制作於</rdfs:label>
+
+	<rdfs:domain rdf:resource="E24_Physical_Man-Made_Thing"/>
+	<rdfs:range rdf:resource="E12_Production"/>
+	<rdfs:subPropertyOf rdf:resource="P31i_was_modified_by"/>
+	<rdfs:subPropertyOf rdf:resource="P92i_was_brought_into_existence_by"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P127_has_broader_term">
+	<rdfs:label xml:lang="el">έχει ευρύτερο όρο</rdfs:label>
+	<rdfs:label xml:lang="fr">a pour terme générique</rdfs:label>
+	<rdfs:label xml:lang="de">hat den Oberbegriff</rdfs:label>
+	<rdfs:label xml:lang="en">has broader term</rdfs:label>
+	<rdfs:label xml:lang="ru">имеет вышестоящий термин</rdfs:label>
+	<rdfs:label xml:lang="pt">tem termo genérico</rdfs:label>
+	<rdfs:label xml:lang="cn">有广义术语</rdfs:label>
+	<rdfs:comment>This property identifies a super-Type to which an E55 Type is related. 
+		It allows Types to be organised into hierarchies. This is the sense of "broader term generic  		(BTG)" as defined in ISO 2788
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E55_Type"/>
+	<rdfs:range rdf:resource="E55_Type"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P127i_has_narrower_term">
+	<rdfs:label xml:lang="fr">a pour terme spécifique</rdfs:label>
+	<rdfs:label xml:lang="de">hat den Unterbegriff</rdfs:label>
+	<rdfs:label xml:lang="en">has narrower term</rdfs:label>
+	<rdfs:label xml:lang="el">έχει στενότερο όρο</rdfs:label>
+	 <rdfs:label xml:lang="pt">tem termo específico</rdfs:label>
+	<rdfs:label xml:lang="cn">有狭义术语</rdfs:label>
+	<rdfs:domain rdf:resource="E55_Type"/>
+	<rdfs:range rdf:resource="E55_Type"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P128_carries">
+	<rdfs:label xml:lang="en">carries</rdfs:label>
+	<rdfs:label xml:lang="fr">est le support de</rdfs:label>
+	<rdfs:label xml:lang="ru">несет</rdfs:label>
+	<rdfs:label xml:lang="el">φέρει</rdfs:label>
+	<rdfs:label xml:lang="de">trägt</rdfs:label>
+	<rdfs:label xml:lang="pt">é o suporte de</rdfs:label>
+	<rdfs:label xml:lang="cn">承载信息</rdfs:label>
+	<rdfs:comment>This property identifies an E90 Symbolic Object carried by an instance of E24 Physical Man-Made Thing.
+In general this would be an E84 Information Carrier P65 shows visual item (is shown by) is a specialisation of P128 carries (is carried by) which should be used for carrying visual items.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E24_Physical_Man-Made_Thing"/>
+	<rdfs:range rdf:resource="E90_Symbolic_Object"/>
+	<rdfs:subPropertyOf rdf:resource="P130_shows_features_of"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P128i_is_carried_by">
+	<rdfs:label xml:lang="el">φέρεται από</rdfs:label>
+	<rdfs:label xml:lang="en">is carried by</rdfs:label>
+	<rdfs:label xml:lang="ru">переносится посредством</rdfs:label>
+	<rdfs:label xml:lang="fr">a pour support</rdfs:label>
+	<rdfs:label xml:lang="de">wird getragen von</rdfs:label>
+	<rdfs:label xml:lang="pt">é suportado por</rdfs:label>
+	<rdfs:label xml:lang="cn">被承载于</rdfs:label>
+	<rdfs:domain rdf:resource="E90_Symbolic_Object"/>
+	<rdfs:range rdf:resource="E24_Physical_Man-Made_Thing"/>
+	<rdfs:subPropertyOf rdf:resource="P130i_features_are_also_found_on"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P130_shows_features_of">
+	<rdfs:label xml:lang="el">παρουσιάζει χαρακτηριστικά του/της</rdfs:label>
+	<rdfs:label xml:lang="en">shows features of</rdfs:label>
+	<rdfs:label xml:lang="ru">демонстрирует признаки</rdfs:label>
+	<rdfs:label xml:lang="fr">présente des caractéristiques de</rdfs:label>
+	<rdfs:label xml:lang="de">zeigt Merkmale von</rdfs:label>
+	<rdfs:label xml:lang="pt">apresenta características de</rdfs:label>
+	<rdfs:label xml:lang="cn">外观特征原出现於</rdfs:label>
+	<rdfs:comment>This property generalises the notions of  "copy of" and "similar to" into a dynamic, asymmetric relationship, where the domain expresses the derivative, if such a direction can be established.
+Otherwise, the relationship is symmetric. It is a short-cut of P15 was influenced by (influenced) in a creation or production, if such a reason for the similarity can be verified. Moreover it expresses similarity in cases that can be stated between two objects only, without historical knowledge about its reasons.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E70_Thing"/>
+	<rdfs:range rdf:resource="E70_Thing"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P130i_features_are_also_found_on">
+	<rdfs:label xml:lang="el">χαρακτηριστικά του βρίσκονται επίσης σε</rdfs:label>
+	<rdfs:label xml:lang="fr">a des caractéristiques se trouvant aussi sur</rdfs:label>
+	<rdfs:label xml:lang="de">Merkmale auch auf</rdfs:label>
+	<rdfs:label xml:lang="ru">признаки также найдены на</rdfs:label>
+	<rdfs:label xml:lang="en">features are also found on</rdfs:label>
+	<rdfs:label xml:lang="pt">características são também encontradas em</rdfs:label>
+	<rdfs:label xml:lang="cn">外观特征被复制於</rdfs:label>
+	<rdfs:domain rdf:resource="E70_Thing"/>
+	<rdfs:range rdf:resource="E70_Thing"/>
+</rdf:Property>
+
+
+<rdf:Property rdf:about="P140_assigned_attribute_to">
+	<rdfs:label xml:lang="de">wies Merkmal zu</rdfs:label>
+	<rdfs:label xml:lang="el">απέδωσε ιδιότητα σε</rdfs:label>
+   <rdfs:label xml:lang="en">assigned attribute to</rdfs:label>
+	<rdfs:label xml:lang="fr">a affecté un attribut à</rdfs:label>
+	<rdfs:label xml:lang="ru">присвоил атрибут для</rdfs:label>
+	<rdfs:label xml:lang="pt">atribuiu atributo para</rdfs:label>
+	<rdfs:label xml:lang="cn">指定属性给</rdfs:label>
+	<rdfs:comment>This property indicates the item to which an attribute or relation is assigned. </rdfs:comment>
+	<rdfs:domain rdf:resource="E13_Attribute_Assignment"/>
+	<rdfs:range rdf:resource="E1_CRM_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P140i_was_attributed_by">
+	<rdfs:label xml:lang="en">was attributed by</rdfs:label>
+	<rdfs:label xml:lang="fr">a reçu un attribut par</rdfs:label>
+	<rdfs:label xml:lang="ru">получил атрибут посредством</rdfs:label>
+	  <rdfs:label xml:lang="de">bekam Merkmal zugewiesen durch</rdfs:label>
+	<rdfs:label xml:lang="el">χαρακτηρίστηκε από</rdfs:label>
+	<rdfs:label xml:lang="pt">foi atribuído por</rdfs:label>
+	<rdfs:label xml:lang="cn">被指定属性於</rdfs:label>
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="E13_Attribute_Assignment"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P141_assigned">
+	<rdfs:label xml:lang="en">assigned</rdfs:label>
+	<rdfs:label xml:lang="ru">присвоил</rdfs:label>
+   <rdfs:label xml:lang="de">wies zu</rdfs:label>
+	<rdfs:label xml:lang="el">απέδωσε</rdfs:label>
+	<rdfs:label xml:lang="fr">a attribué</rdfs:label>
+	<rdfs:label xml:lang="pt">atribuiu</rdfs:label>
+	<rdfs:label xml:lang="cn">指定了属性值</rdfs:label>
+	<rdfs:comment>This property indicates the attribute that was assigned or the item that was related to the item denoted by a property P140 assigned attribute to in an Attribute assignment action.
+</rdfs:comment>
+	<rdfs:domain rdf:resource="E13_Attribute_Assignment"/>
+	<rdfs:range rdf:resource="E1_CRM_Entity"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P141i_was_assigned_by">
+	<rdfs:label xml:lang="ru">был присвоен посредством</rdfs:label>
+	<rdfs:label xml:lang="de">wurde zugewiesen durch</rdfs:label>
+	<rdfs:label xml:lang="fr">a été attribué par</rdfs:label>
+	<rdfs:label xml:lang="en">was assigned by</rdfs:label>
+	<rdfs:label xml:lang="el">αποδόθηκε από</rdfs:label>
+	<rdfs:label xml:lang="pt">foi atribuído por</rdfs:label>
+	<rdfs:label xml:lang="cn">被指定了属性值於</rdfs:label>
+	<rdfs:domain rdf:resource="E1_CRM_Entity"/>
+	<rdfs:range rdf:resource="E13_Attribute_Assignment"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P148_has_component">
+	<rdfs:label xml:lang="en">has component</rdfs:label>
+	<rdfs:label xml:lang="de">hat Bestandteil</rdfs:label>
+	<rdfs:label xml:lang="cn">有组件</rdfs:label>
+	<rdfs:comment>This property associates an instance of E89 Propositional Object with a structural part of it that is by itself an instance of E89 Propositional Object.</rdfs:comment>
+	<rdfs:domain rdf:resource="E89_Propositional_Object"/>
+	<rdfs:range rdf:resource="E89_Propositional_Object"/>
+</rdf:Property>
+
+<rdf:Property rdf:about="P148i_is_component_of">
+	<rdfs:label xml:lang="en">is component of</rdfs:label>
+	<rdfs:label xml:lang="de">ist Bestandteil von</rdfs:label>
+	<rdfs:label xml:lang="cn">被用来组成</rdfs:label>
+	<rdfs:domain rdf:resource="E89_Propositional_Object"/>
+	<rdfs:range rdf:resource="E89_Propositional_Object"/>
+</rdf:Property>
+
+</rdf:RDF>
